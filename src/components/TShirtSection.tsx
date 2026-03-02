@@ -29,7 +29,7 @@ export const TShirtSection = () => {
   const baseMessage = selectedSize
     ? `Gostaria de saber mais informações sobre a camiseta da Landi Turbina! Tem tamanho ${selectedSize}?`
     : "Gostaria de saber mais informações sobre a camiseta da Landi Turbina!";
-  const whatsappLink = `https://api.whatsapp.com/send/?phone=5514997297754&text=${encodeURIComponent(baseMessage)}&type=phone_number&app_absent=0`;
+  const whatsappLink = `https://api.whatsapp.com/send/?phone=5514996952282&text=${encodeURIComponent(baseMessage)}&type=phone_number&app_absent=0`;
 
   return (
     <section className="py-12 md:py-16 bg-background relative overflow-hidden" ref={ref}>
