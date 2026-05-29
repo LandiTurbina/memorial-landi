@@ -1,16 +1,18 @@
-﻿{
-    "installCommand":  "pnpm install --no-frozen-lockfile",
-    "redirects":  [
-                      {
-                          "source":  "/",
-                          "destination":  "https://loja.landiturbina.com.br",
-                          "permanent":  true
-                      }
-                  ],
-    "rewrites":  [
-                     {
-                         "source":  "/(.*)",
-                         "destination":  "/index.html"
-                     }
-                 ]
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "installCommand": "pnpm install --no-frozen-lockfile",
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://loja.landiturbina.com.br",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
