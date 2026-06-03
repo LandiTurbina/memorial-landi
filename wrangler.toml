@@ -1,6 +1,8 @@
 name = "memorial"
 compatibility_date = "2024-01-01"
 
-[build]
-command = "pnpm run build"
-upload_options = {}
+[vars]
+
+# Cloudflare Pages build configuration
+[pages]
+build_output_dir = "dist"
