@@ -1,15 +1,26 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import type { Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBGLHHHRBN46vnro7qwljPLhC7cQYXsZJg",
-  authDomain: "landit-89463.firebaseapp.com",
-  projectId: "landit-89463",
-  storageBucket: "landit-89463.firebasestorage.app",
-  messagingSenderId: "426395338357",
-  appId: "1:426395338357:web:21b2a13dc78434893fda3c",
-  measurementId: "G-HB1NN40NZD",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+const requiredFirebaseKeys = [
+  "apiKey",
+  "authDomain",
+  "projectId",
+  "storageBucket",
+  "messagingSenderId",
+  "appId",
+] as const;
+
+const hasFirebaseConfig = requiredFirebaseKeys.every((key) => Boolean(firebaseConfig[key]));
+
+export const db: Firestore | null = hasFirebaseConfig ? getFirestore(initializeApp(firebaseConfig)) : null;

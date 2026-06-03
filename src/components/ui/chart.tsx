@@ -71,11 +71,11 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
         __html: Object.entries(THEMES)
           .map(
             ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
+${prefix} [data-chart="${sanitizeCssIdentifier(id)}"] {
 ${colorConfig
   .map(([key, itemConfig]) => {
     const color = itemConfig.theme?.[theme as keyof typeof itemConfig.theme] || itemConfig.color;
-    return color ? `  --color-${key}: ${color};` : null;
+    return isSafeCssColor(color) ? `  --color-${sanitizeCssIdentifier(key)}: ${color};` : null;
   })
   .join("\n")}
 }
@@ -84,6 +84,21 @@ ${colorConfig
           .join("\n"),
       }}
     />
+  );
+};
+
+const sanitizeCssIdentifier = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, "");
+
+const isSafeCssColor = (value: string | undefined): value is string => {
+  if (!value) {
+    return false;
+  }
+
+  return (
+    /^#[0-9a-fA-F]{3,8}$/.test(value) ||
+    /^hsl\(\s*[\d.]+(?:deg|rad|turn)?\s+[\d.]+%\s+[\d.]+%(?:\s*\/\s*(?:[\d.]+%?|0?\.\d+|1))?\s*\)$/.test(value) ||
+    /^rgb\(\s*\d{1,3}\s+\d{1,3}\s+\d{1,3}(?:\s*\/\s*(?:[\d.]+%?|0?\.\d+|1))?\s*\)$/.test(value) ||
+    /^[a-zA-Z]+$/.test(value)
   );
 };
 

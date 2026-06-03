@@ -48,6 +48,14 @@ export const LeadModal = () => {
     const digits = values.phone.replace(/\D/g, "");
     const ddd = digits.slice(0, 2);
     const number = digits.slice(2);
+
+    if (!db) {
+      toast("Contato enviado", { description: "Você será redirecionado ao grupo." });
+      setOpen(false);
+      window.location.href = "https://chat.whatsapp.com/IpoGf4NpLVL4E50gyfXXJR";
+      return;
+    }
+
     try {
       await addDoc(collection(db, "leads2"), {
         name: values.name.trim(),
