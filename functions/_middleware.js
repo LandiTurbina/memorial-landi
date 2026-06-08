@@ -20,12 +20,23 @@ const redirectTo = (url, host, pathname) => {
   return Response.redirect(target.toString(), 301);
 };
 
+const withNoIndex = async (responsePromise) => {
+  const response = await responsePromise;
+  const headers = new Headers(response.headers);
+  headers.set("X-Robots-Tag", "noindex, follow");
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+};
+
 export async function onRequest(context) {
   const url = new URL(context.request.url);
   const host = url.hostname.toLowerCase();
 
   if (host === ENCONTRO_HOST) {
-    return context.next();
+    return withNoIndex(context.next());
   }
 
   if (!MAIN_HOSTS.has(host) || isAssetRequest(url)) {
